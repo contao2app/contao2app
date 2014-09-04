@@ -1,0 +1,13 @@
+<?php echo $this->name; ?> hat einen neuen Kommentar über Ihre App erstellt.
+
+---
+
+<?php echo $this->comment; ?>
+
+
+---
+
+Bearbeiten: <?php echo $this->edit; ?>
+
+
+Wenn Sie Kommentare moderieren, müssen Sie sich im Backend anmelden und den Kommentar veröffentlichen.

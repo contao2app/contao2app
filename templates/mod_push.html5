@@ -1,0 +1,86 @@
+<?php if (!$this->modal): ?>
+    <div id="tl_buttons">
+        <a href="<?php echo $this->href; ?>" class="header_back" title="<?php echo $this->title; ?>"><?php echo $this->button; ?></a>
+    </div>
+    <h2 class="sub_headline">Pushen Sie eine Nachricht</h2>
+<?php endif ?>
+
+
+
+
+<form id="c2aPush" class="tl_form" method="post" action="<?php echo $this->action; ?>">
+    <input type="hidden" name="action" value="push">
+    <input type="hidden" name="REQUEST_TOKEN" value="<?php echo REQUEST_TOKEN; ?>">
+    <input type="hidden" name="pushId" value="<?php echo $_GET['pushId']; ?>">
+    <input type="hidden" name="pushTable" value="<?php echo $_GET['pushTable']; ?>">
+    <div class="tl_formbody_edit">
+
+        <?php echo $this->status; ?>
+
+        <div class="long clr">
+            <h3><label>Settings wählen:</label></h3>
+            <select id="settings" class="tl_select tl_chosen" onfocus="Backend.getScrollOffset()" style="width: 350px; display: none;" name="pushSettings">
+                <option value="">-</option>
+                <?php if ($this->pushSettings): ?>
+                    <?php foreach ($this->pushSettings as $key => $value): ?>
+                        <option value="<?php echo $value['id']; ?>"><?php echo $value['title']; ?></option>
+                    <?php endforeach ?>
+                <?php endif ?>
+            </select>
+            <p class="tl_help tl_tip" title="">Wählen Sie hier die Einstellungen der App.</p><br>
+        </div>
+
+        <hr>
+
+        <?php if (!$this->modal): ?>
+
+            <h3>Inhalte wählen:</h3>
+
+            <div class="long clr">
+                <h3><label>Artikel</label></h3>
+                <select id="selectArticle" class="tl_select tl_chosen" onfocus="Backend.getScrollOffset()" style="width: 450px; display: none;" name="pushPost[article]">
+                    <option value="">-</option>
+                    <?php foreach ($this->articles as $key => $value): ?>
+                        <optgroup label="<?php echo $key; ?>">
+                            <?php foreach ($value as $k => $v): ?>
+                                <option value="<?php echo $k; ?>"><?php echo $v; ?></option>
+                            <?php endforeach ?>
+                        </optgroup>
+                    <?php endforeach ?>
+
+                </select>
+                <p class="tl_help tl_tip" title="">Wählen Sie einen Artikel.</p><br>
+            </div>
+
+            <p>oder</p>
+
+            <div class="long clr">
+                <h3><label>News</label></h3>
+                <select id="selectNews" class="tl_select tl_chosen" onfocus="Backend.getScrollOffset()" style="width: 450px; display: none;" name="pushPost[news]">
+                    <option value="">-</option>
+                    <?php foreach ($this->news as $key => $value): ?>
+                        <optgroup label="<?php echo $key; ?>">
+                            <?php foreach ($value as $k => $v): ?>
+                                <option value="<?php echo $k; ?>"><?php echo $v; ?></option>
+                            <?php endforeach ?>
+                        </optgroup>
+                    <?php endforeach ?>
+
+                </select>
+                <p class="tl_help tl_tip" title="">Wählen Sie einen Artikel.</p><br>
+            </div>
+        <?php endif ?>
+
+        <div class="long clr">
+            <h3><label>Nachricht (max. 120 Zeichen)</label></h3>
+            <textarea name="pushMessage" cols="120" rows="5" maxlength="120"></textarea>
+            <p class="tl_help tl_tip" title="">Geben Sie hier Ihre Nachricht ein.</p><br>
+        </div>
+    </div>
+
+    <div class="tl_formbody_submit">
+        <div class="tl_submit_container">
+            <input id="push" class="tl_submit" type="submit" value="Pushen" name="push" <?php if (!$this->active): ?> disabled="true"<?php endif ?>>
+        </div>
+    </div>
+</form>

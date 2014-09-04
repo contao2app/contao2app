@@ -1,0 +1,20 @@
+
+<div id="tl_buttons">
+    <a href="<?php echo $this->href; ?>" class="header_back" title="<?php echo $this->title; ?>"><?php echo $this->button; ?></a>
+</div>
+
+<h2 class="sub_headline">Wie funktioniert's? </h2>
+<div id="tl_soverview">
+Um die Contao2app-Erweiterung  im Zusammenspiel mit dem Blappsta-Plugin nutzen zu können, ist folgendes notwendig:
+<ol>
+	<li>1. Legen Sie unter „Contao2app-Settings“ zunächst Ihre App-Konfiguration an.</li>
+	<li>2. Legen Sie ein neues Frontend-Modul vom Typ "c2a" an (zu finden unter "Anwendungen"). Dieses ModuI liefert die anzuzeigenden Inhalte als sog. json-String an die App. Ohne dieses Modul werden keine Inhalte in der App angezeigt. </li>
+	<li>3. Laden Sie die Blappsta-App auf Ihr Smartphone</li>
+	<li>4. Sie können Ihre eigene App testweise auf Ihrem Smartphone ausprobieren, indem Sie den angezeigten QR-Code mit Ihrem Smartphone scannen. Der dahinterliegende Code überschreibt die Inhalte der Blappsta-App mit Ihrer eigenen App.<br /><br />Alternativ können Sie Ihre App auch im Emulator testen. Geben Sie dazu einfach die URL Ihrer Contao-Installation ein. Aber glauben Sie uns: Es fühlt sich wirklich besser an, wenn Sie Ihre App gleich „in der Hand haben“.</li>
+</ol>
+Die komplette Dokumentation finden Sie unter <a href="http://www.contao2app.de/index.php/erlaeuterung-des-backends.html" target="_blank" style="text-decoration:underline">www.contao2app.de</a>
+Wenn Sie das Blappsta-Plugin bereits auf Ihrem Smartphone installiert haben, scannen Sie diesen QR-Code und öffnen den angezeigten Link in Ihrem Browser auf dem Smartphone. <br />Und was passiert dann?<br />Mit dem Link werden die Blappsta-Inhalte überschrieben - und zwar mit den Inhalten aus Ihrer App. Cool, oder?
+    <img src="<?php echo $this->qr; ?>" alt="QR-Code">
+
+
+</div>

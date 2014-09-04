@@ -1,0 +1,11 @@
+
+<div id="tl_buttons">
+    <a href="<?php echo $this->href; ?>" class="header_back" title="<?php echo $this->title; ?>"><?php echo $this->button; ?></a>
+</div>
+
+<h2 class="sub_headline">Testen Sie hier Ihre App: </h2>
+
+<div id="simulator" style="margin: 20px 0 20px 220px;">
+
+    <iframe src="https://app.io/p6Kgfi?params=%7B%22customURLString%22%3A%22<?php echo $this->url; ?>%22%7D&#038;autoplay=true&#038;orientation=portrait&#038;device=iphone5" height="607px" width="291px" frameborder="0" allowtransparency="true" scrolling="no"></iframe>
+</div>
