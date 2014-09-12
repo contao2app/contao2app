@@ -13,30 +13,9 @@ class c2aFrontend extends \Module
 {
 
     protected $strTemplate = '';
-
-    /**
-     * Klassenvariable für Versionsnummer
-     * @var string
-     */
-    protected $c2aVersion = "0.7.5";
-
-    /**
-     * Klassenvariable für Einstellungen
-     * @var mixed array
-     */
+    protected $c2aVersion = "0.7.9.1";
     protected $settings;
-
-    /**
-     * Klassenvariable für Request Präfix
-     * @var mixed array
-     */
     protected $request = array();
-
-    /**
-     * Klassenvariable fuer App-Sprache (c2a im Augenblick nur "de" und "en")
-     * TODO
-     * @var array
-     */
     protected $lang_de = array(
         'Menu' => 'Menü',
         'Please wait...' => 'Bitte warten…',
@@ -99,27 +78,38 @@ class c2aFrontend extends \Module
         'The input is incomplete' => 'Die Eingabe ist unvollständig',
         'Thanks' => 'Danke',
         'No set up email account.' => 'Kein E-Mail Account eingerichtet.',
-        "No set up twitter account." => "Kein Twitter Account eingerichtet.",
+        "No set up twitter account." => "Du hast noch keinen Twitter Account auf dem Gerät eingerichtet. Dieser ist für das Sharing notwendig. Bitte gehe zu den Einstellungen -> Twitter und gib Deine Anmeldedaten ein.",
         'Copy link' => 'Link kopieren',
         'Open in Safari' => 'In Safari öffnen',
         'Notifications' => 'Benachrichtigungen',
-        'Select which categories to receive push-notifications from:' => 'Wählen sie die Kategorien aus der sie Push-Benachrichtigungen erhalten wollen:',
-        'Recent content could not be accessed. Please connect your device to the internet and try again.'=>'Aktuelle Inhalte können gerade leider nicht geladen werden. Bitte überprüfen Sie Ihre Internetverbindung.'
+        'Select which categories to receive push-notifications from:' => 'Wählen Sie die Kategorien, aus der Sie Push-Benachrichtigungen erhalten möchten:',
+        'Recent content could not be accessed. Please connect your device to the internet and try again.'=>'Aktuelle Inhalte können gerade leider nicht geladen werden. Bitte überprüfen Sie Ihre Internetverbindung.',
+        'No set up facebook account.'=>'Du hast noch keinen Facebook Account auf dem Gerät eingerichtet. Dieser ist für das Sharing notwendig. Bitte gehe zu Einstellungen -> Facebook und gib Deine Anmeldedaten ein.',
+        'Settings'=>'Einstellungen',
+        'You have not yet set up your Facebook account on this device, which is necessary for sharing. Please go to your iOS Settings > Facebook and enter your login data.'=>'Du hast noch keinen Facebook Account auf dem Gerät eingerichtet. Dieser ist für das Sharing notwendig. Bitte gehe zu Einstellungen -> Facebook und gib Deine Anmeldedaten ein.',
+        'You have not yet set up your Twitter account on this device, which is necessary for sharing. Please go to your iOS Settings > Twitter and enter your login data.'=>'Du hast noch keinen Twitter Account auf dem Gerät eingerichtet. Dieser ist für das Sharing notwendig. Bitte gehe zu Einstellungen -> Twitter und gib Deine Anmeldedaten ein.'
     );
 
     protected function compile() {
 
-        // Wenn keine settings vorhanden dann fehlermeldung
         if ($this->appsettings && $this->pagesettings) {
 
-            // Einstellungen laden
             $this->loadSettings();
             $controller = \Input::get('ynaa');
+
+            if (\Input::get($this->request['action']) == 'add' ) {
+                $string = serialize($_POST);
+                $this->log("POST: ".$string, "CONTAO2APP", "CONTAO2APP");
+                $string = serialize($_GET);
+                $this->log("GET: ".$string, "CONTAO2APP", "CONTAO2APP");
+                $string = serialize($_REQUEST);
+                $this->log("REQUEST: ".$string, "CONTAO2APP", "CONTAO2APP");
+            }
 
             if ($controller) {
                 header('Content-Type: application/json');
 
-                // $this->log(\Environment::get('request'), "Contao2App::log()", "CONTAO2APP");
+                $this->log(\Environment::get('request'), "Contao2App::log()", "CONTAO2APP");
 
                 switch ($controller) {
                     case 'settings':
@@ -176,12 +166,8 @@ class c2aFrontend extends \Module
         }
     } // compile
 
-    /**
-     * Laden der Einstellungen
-     */
     protected function loadSettings() {
 
-        // Setzen des variablen Präfix
         $prefix = \Input::get('nh_prefix');
 
         if (isset($prefix) && $prefix != "") {
@@ -190,52 +176,48 @@ class c2aFrontend extends \Module
             $prefix = "";
         }
 
-        // Zwischenspeichern des Präfix in Klassenvariable
         $this->request = array(
-            'id'         => $prefix . 'id',
-            'option'     => $prefix . 'option',
-            'ts'         => $prefix . 'ts',
-            'sorttype'   => $prefix . 'sorttype',
-            'post_id'    => $prefix . 'post_id',
-            'post_ts'    => $prefix . 'post_ts',
-            'limit'      => $prefix . 'limit',
-            'offset'     => $prefix . 'offset',
-            'n'          => $prefix . 'n',
-            'action'     => $prefix . 'action',
-            'key'        => $prefix . 'key',
-            'comment'    => $prefix . 'comment',
-            'name'       => $prefix . 'name',
-            'email'      => $prefix . 'email',
-            'comment_id' => $prefix . 'comment_id',
-            'type'       => $prefix . 'type',
+            'id'          => $prefix . 'id',
+            'option'      => $prefix . 'option',
+            'ts'          => $prefix . 'ts',
+            'sorttype'    => $prefix . 'sorttype',
+            'post_id'     => $prefix . 'post_id',
+            'post_ts'     => $prefix . 'post_ts',
+            'limit'       => $prefix . 'limit',
+            'offset'      => $prefix . 'offset',
+            'n'           => $prefix . 'n',
+            'action'      => $prefix . 'action',
+            'key'         => $prefix . 'key',
+            'comment'     => $prefix . 'comment',
+            'name'        => $prefix . 'name',
+            'email'       => $prefix . 'email',
+            'comment_id'  => $prefix . 'comment_id',
+            'type'        => $prefix . 'type',
 
-            'lang'       => $prefix . 'lang',
-            'b'          => $prefix . 'b',
-            'h'          => $prefix . 'h',
-            'pl'         => $prefix . 'pl',
-            'av'         => $prefix . 'av',
-            'd'          => $prefix . 'd',
+            'lang'        => $prefix . 'lang',
+            'b'           => $prefix . 'b',
+            'h'           => $prefix . 'h',
+            'pl'          => $prefix . 'pl',
+            'av'          => $prefix . 'av',
+            'd'           => $prefix . 'd',
 
-            'tab'        => $prefix . 'tab',
+            'tab'         => $prefix . 'tab',
+            'cat_include' => $prefix . 'cat_include',
+            'meta'        => $prefix . 'meta',
         );
 
-        // Speichern der Appsettings in Klassenvariable
         $this->settings = c2aModel::findByPk($this->appsettings);
 
-        // Speichern des ausgewählten Seitenbaums
         $this->settings['page'] = \PageModel::findPublishedById($this->pagesettings);
 
-        // Einstellungen, die die App benötigt
         if (!$this->settings['min-img-size-for-resize']) {
             $this->settings['min-img-size-for-resize'] = 100;
         }
 
-        // Einstellungen Logo
         if ($this->settings['logo']) {
             $this->settings['logo'] = $this->getFilePath($this->settings['logo']);
         }
 
-        // Einstellungen für externe CSS Dateien
         if ($this->settings['external']) {
             $order = unserialize($this->settings['orderExt']);
             $paths = "";
@@ -247,26 +229,21 @@ class c2aFrontend extends \Module
             $this->settings['external'] = $paths;
         }
 
-        // Menüpunkte laden
         $res = \PageModel::findByinAppPublished(1);
         $this->settings['menu'] = $this->checkMenuPagesForContent($res);
 
-        // Wenn keine Seiten veröffentlicht -> Fehlermeldung
         if (count($this->settings['menu']) == 0) {
             header('Content-Type: application/json');
             echo json_encode(array('error' => $this->errorcode(14)));exit;
         }
 
-        // Startseitenkacheln laden
         $this->settings['homepresets']['items'] = $this->getHomepresetItemsFromMenuItems();
 
-        // Wenn keine vorhanden -> Fehlermeldung
         if (count($this->settings['homepresets']['items']) == 0) {
             header('Content-Type: application/json');
             echo json_encode(array('error' => $this->errorcode(23)));exit;
         }
 
-        // Teaser laden
         if ($this->settings['teaserSelection']) {
             $teaserArray = unserialize($this->settings['teaserSelection']);
             $tmpArr = array();
@@ -283,17 +260,11 @@ class c2aFrontend extends \Module
             $this->settings['teaser'] = $tmpArr;
         }
 
-        // Wann zuletzt news/events/artikel/seite/einstellungen bearbeitet wurde als Timestamp speichern
         $this->settings['tstamp'] = $this->checkTimestamp($this->settings['tstamp']);
     } // loadSettings
 
-    /**
-     * Speichern des letzten Timestamps
-     * @return integer timestamp
-     */
     protected function checkTimestamp($tstamp = 0) {
 
-        // Menüpunkt Timestamp überprüfen
         foreach ($this->settings['menu'] as $key => $value) {
             if ($tstamp < $value['tstamp']) {
                 $tstamp = $value['tstamp'];
@@ -301,9 +272,9 @@ class c2aFrontend extends \Module
         }
 
         $queryPage = "SELECT max(tstamp) as ts from tl_page ";
-        $tsPage = \Database::getInstance()->query($queryPage)->fetchRow()[0];
+        $arrTsPage = \Database::getInstance()->query($queryPage)->fetchRow();    
+        $tsPage = $arrTsPage[0];
 
-        // Seitentimestamp überprüfen
         if ($tstamp < $tsPage) {
             $tstamp = $tsPage;
         }
@@ -314,9 +285,9 @@ class c2aFrontend extends \Module
                             ON        p.id = a.pid
                             WHERE     a.inAppPublished = 1";
 
-        $tsArticle = \Database::getInstance()->query($queryArticle)->fetchRow()[0];
+        $arrTsArticle = \Database::getInstance()->query($queryArticle)->fetchRow();
+        $tsArticle = $arrTsArticle[0];
 
-        // Artikeltimestamp überprüfen
         if ($tstamp < $tsArticle) {
             $tstamp = $tsArticle;
         }
@@ -326,9 +297,9 @@ class c2aFrontend extends \Module
                         LEFT JOIN tl_news_archive p
                         ON        p.id = a.pid";
 
-        $tsNews = \Database::getInstance()->query($queryNews)->fetchRow()[0];
+        $arrTsNews = \Database::getInstance()->query($queryNews)->fetchRow();
+		$tsNews = $arrTsNews[0];
 
-        // news timestamp überprüfen
         if ($tstamp < $tsNews) {
             $tstamp = $tsNews;
         }
@@ -337,9 +308,9 @@ class c2aFrontend extends \Module
                         FROM        tl_calendar_events a
                         LEFT JOIN   tl_calendar p
                         ON          p.id = a.pid";
-        $tsEvents = \Database::getInstance()->query($queryEvents)->fetchRow()[0];
+        $arrTsEvents = \Database::getInstance()->query($queryEvents)->fetchRow();
+		$tsEvents = $arrTsEvents[0];
 
-        // Event timestamp überprüfen
         if ($tstamp < $tsEvents) {
             $tstamp = $tsEvents;
         }
@@ -347,10 +318,6 @@ class c2aFrontend extends \Module
         return $tstamp;
     } // checkTimestamp
 
-    /**
-     * Überprüfen, ob die Menü-Seiten Inhalte haben
-     * @return mixed array (vorgegebene Struktur)
-     */
     protected function checkMenuPagesForContent($items) {
         $retArr = array();
         $tmpArr = array();
@@ -363,7 +330,6 @@ class c2aFrontend extends \Module
                 $img = $this->getFilePath($item->thumb);
             }
 
-            // für jeden menüpunkt schauen, ob veröffentlichte artikel vorhanden sind
             $query = "SELECT id, pid, title, tstamp
                       FROM   `tl_article`
                       WHERE  pid = '{$item->id}'
@@ -374,7 +340,6 @@ class c2aFrontend extends \Module
 
             $resArticles = \Database::getInstance()->query($query)->fetchAllAssoc();
 
-            // für jeden artikel schauen, ob veröffentlichter content vorhanden ist
             foreach ($resArticles as $article) {
                 $queryContent = "SELECT id, pid, type
                                  FROM   `tl_content`
@@ -385,7 +350,6 @@ class c2aFrontend extends \Module
 
                 $resContent = \Database::getInstance()->query($queryContent);
 
-                // wenn content da ist, zwischenspeichern
                 if ($resContent->numRows) {
                     if (!array_key_exists($article['pid'], $tmpArr) ) {
                         $tmpArr[$article['pid']] = array(
@@ -400,12 +364,10 @@ class c2aFrontend extends \Module
             }
         }
 
-        // zwischengepeicherte
         foreach ($tmpArr as $key => $value) {
             $retArr[] = $value;
         }
 
-        // sollen events angezeigt werden?
         if ($this->settings['eventManager']) {
 
             $result = \CalendarModel::findByPk($this->settings['calendar']);
@@ -415,7 +377,6 @@ class c2aFrontend extends \Module
                 $thumb = $this->getFilePath($result->thumb);
             }
 
-            // vorgegebene struktur für events
             $retArr[] = array(
                 'title'  => "Events",
                 'id'     => "-1",
@@ -425,7 +386,6 @@ class c2aFrontend extends \Module
             );
         }
 
-        // sollen news angezeigt werden
         if ($this->settings['newsManager']) {
             $result = \NewsArchiveModel::findByPk($this->settings['news']);
             $thumb  = "";
@@ -436,7 +396,6 @@ class c2aFrontend extends \Module
                 $thumb = $this->getFilePath($result->thumb);
             }
 
-            // vorgegebene struktur für news
             $retArr[] = array(
                 'title'  => "News",
                 'id'     => "-98",
@@ -445,14 +404,9 @@ class c2aFrontend extends \Module
                 'tstamp' => $result->tstamp,
             );
         }
-        // dump($tmpArr, $retArr);exit;
         return $retArr;
     } // checkMenuPagesForContent
 
-    /**
-     * Laden der Startseitenpunkte von den Menüpunkten
-     * @return mixed array (vorgegebene Struktur)
-     */
     protected function getHomepresetItemsFromMenuItems() {
         $tmpItemArray = array();
         $i = 0;
@@ -471,10 +425,6 @@ class c2aFrontend extends \Module
         return $tmpItemArray;
     } // getHomepresetItemsFromMenuItems
 
-    /**
-     * Settingscontroller
-     * @return mixed array (vorgegebene Struktur)
-     */
     protected function settingsController() {
 
         $getTs = \Input::get($this->request['ts']);
@@ -501,7 +451,6 @@ class c2aFrontend extends \Module
             $ts = $this->settings['tstamp'];
             $this->settings['sort'] = ($this->settings['sort']) ? 1 : 0;
 
-            // Sprache setzen (im augenblick nur englisch/deutsch)
             if ($this->settings['sprache'] == "Deutsch") {
                 $returnarray['lang'] = "de";
                 $returnarray['lang_array'] = $this->lang_de;
@@ -515,7 +464,6 @@ class c2aFrontend extends \Module
                 $returnarray['lang_array'] = $lang_en;
             }
 
-            // Farben setzen
             $returnarray['changes']           = 1;
             $returnarray['color-01']          = ($this->settings['primaerfarbe'])       ? "#" . $this->settings['primaerfarbe']         : "";
             $returnarray['color-02']          = ($this->settings['sekundaerfarbe'])     ? "#" . $this->settings['sekundaerfarbe']       : "";
@@ -549,10 +497,6 @@ class c2aFrontend extends \Module
         return array('settings' => $returnarray);
     } // settingsController
 
-    /**
-     * Vorbereitung für iBeacon Unterstützung
-     * @return mixed array (vorgegebene Struktur)
-     */
     protected function iBeaconController() {
 
         if (!$this->settings['uuid']) {
@@ -575,10 +519,6 @@ class c2aFrontend extends \Module
         return (array('ibeacon' => $returnarray));
     } // iBeaconController
 
-    /**
-     * App Menüseiten als Array
-     * @return mixed array (vorgegebene Struktur)
-     */
     protected function getMenuPages($arrMenuPageId) {
         $tmpMenuArray = array();
         $i = 0;
@@ -595,10 +535,6 @@ class c2aFrontend extends \Module
         return $tmpMenuArray;
     } // getMenuPages
 
-    /**
-     * Startseitenpunkte
-     * @return mixed array (vorgegebene Struktur)
-     */
     protected function homepresetsController() {
         $returnarray['error'] = $this->errorcode(0);
 
@@ -631,10 +567,6 @@ class c2aFrontend extends \Module
         return array('homepresets' => $returnarray);
     } // homepresetsController
 
-    /**
-     * Details über die Homepresets
-     * @return mixed array (vorgegebene Struktur)
-     */
     protected function getHomepresetsItems($arrHomepresetsItems) {
         $categories   = array();
         $tmpItemArray = array();
@@ -695,10 +627,6 @@ class c2aFrontend extends \Module
         return $tmpItemArray;
     } // getHomepresetsItems
 
-    /**
-     * Teaser Controller
-     * @return mixed array (vorgegebene Struktur)
-     */
     protected function teaserController() {
         $returnarray['error'] = $this->errorcode(0);
 
@@ -737,10 +665,6 @@ class c2aFrontend extends \Module
         return array('teaser' => $returnarray);
     } // teaserController
 
-    /**
-     * Teaser Details
-     * @return mixed array (vorgegebene Struktur)
-     */
     protected function getTeaserItems($arrTeaserItems) {
 
         $tmpItemArray = array();
@@ -772,10 +696,6 @@ class c2aFrontend extends \Module
         return $tmpItemArray;
     } // getTeaserItems
 
-    /**
-     * Teaser Item Detail
-     * @return mixed array (vorgegebene Struktur)
-     */
     protected function getTeaserDetail($explode) {
         $retArr       = array();
         $thumb        = "";
@@ -844,10 +764,6 @@ class c2aFrontend extends \Module
         return $retArr;
     } // getTeaserDetail
 
-    /**
-     * Category Controller (Für c2a, vorerst nur für News und Events relevant)
-     * @return mixed array (vorgegebene Struktur)
-     */
     protected function categoriesController() {
 
         $returnarray['error']   = $this->errorcode(0);
@@ -884,7 +800,6 @@ class c2aFrontend extends \Module
                 }
             }
 
-            // assCats?! Nebelhorn!
             if ($cat && count($cat) > 0) {
                 $i = 0;
                 foreach($cat as $k => $v) {
@@ -958,10 +873,6 @@ class c2aFrontend extends \Module
         return array('categories' => $returnarray);
     } // categoriesController
 
-    /**
-     * ArticleController / Details eines Article zurückgeben
-     * @return mixed array (vorgegebene Struktur)
-     */
     protected function articleController() {
 
         $id = \Input::get($this->request['id']);
@@ -1016,10 +927,6 @@ class c2aFrontend extends \Module
         return (array('article' => $returnarray));
     } // articleController
 
-    /**
-     * HTML Header vor den Content setzen
-     * @return mixed array (vorgegebene Struktur)
-     */
     protected function generateHtmlHead($content) {
 
         $this->settings['cssStyle'] = preg_replace(
@@ -1043,7 +950,7 @@ class c2aFrontend extends \Module
         if (strpos($content, '<html><head><meta charset="utf-8"></head>')) {
             $content = str_replace(
                 '<html><head><meta charset="utf-8"></head>',
-                '<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width"><link href="http://necolas.github.io/normalize.css/3.0.1/normalize.css" rel="stylesheet" type="text/css"><style type="text/css">'
+                '<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /><meta name="viewport" content="width=device-width"><link href="http://necolas.github.io/normalize.css/3.0.1/normalize.css" rel="stylesheet" type="text/css"><style type="text/css">'
                 . $this->settings['cssStyle'] . ' body{color:#'
                 . $this->settings['farbeFliesstext'] . ';}</style></head>',
                 $content
@@ -1052,7 +959,7 @@ class c2aFrontend extends \Module
         } elseif (strpos($content, '<html>')) {
             $content = str_replace(
                 '<html>',
-                '<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width"><link href="http://necolas.github.io/normalize.css/3.0.1/normalize.css" rel="stylesheet" type="text/css"><style type="text/css">'
+                '<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /><meta name="viewport" content="width=device-width"><link href="http://necolas.github.io/normalize.css/3.0.1/normalize.css" rel="stylesheet" type="text/css"><style type="text/css">'
                 . $this->settings['cssStyle'] . ' body{color:#'
                 . $this->settings['farbeFliesstext'] . ';}</style></head>',
                 $content
@@ -1060,7 +967,7 @@ class c2aFrontend extends \Module
 
         } else {
 
-            $content = '<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width"><link href="http://necolas.github.io/normalize.css/3.0.1/normalize.css" rel="stylesheet" type="text/css"><style type="text/css">'
+            $content = '<!doctype html><html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /><meta name="viewport" content="width=device-width"><link href="http://necolas.github.io/normalize.css/3.0.1/normalize.css" rel="stylesheet" type="text/css"><style type="text/css">'
                 . $this->settings['cssStyle'] . ' body{color:#'
                 . $this->settings['farbeFliesstext'] . ';}</style></head><body>'
                 . $content . '</body></html>';
@@ -1077,10 +984,6 @@ class c2aFrontend extends \Module
         return $content;
     } // generateCss
 
-    /**
-     * Content Controller / App Update Fix
-     * @return string html content
-     */
     protected function contentController() {
 
         $articleId = \Input::get($this->request['id']);
@@ -1093,10 +996,6 @@ class c2aFrontend extends \Module
         return $content;
     } // contentController
 
-    /**
-     * Content zum Artikel
-     * @return mixed array (vorgegebene Struktur)
-     */
     protected function getContentFromArticle($id, $type = "") {
         $tmpContent = "";
         $thumb      = "";
@@ -1231,10 +1130,6 @@ class c2aFrontend extends \Module
         return $retArr;
     } // getContentFromArticle
 
-    /**
-     * News Content
-     * @return string html content
-     */
     protected function parseNews($objArticle) {
         global $objPage;
         $objTemplate               = new \FrontendTemplate($this->news_template);
@@ -1261,10 +1156,6 @@ class c2aFrontend extends \Module
         return $retVal;
     } // parseNews
 
-    /**
-     * Events Controller
-     * @return mixed array (vorgegebene Struktur)
-     */
     protected function eventsController($lim = 0) {
         $getLimit = \Input::get($this->request['limit']);
 
@@ -1328,10 +1219,6 @@ class c2aFrontend extends \Module
         return array('events' => $returnarray);
     } // eventsController
 
-    /**
-     * Event Bild
-     * @return string Event-Bild-Pfad
-     */
     protected function getEventThumb() {
         $result = \CalendarModel::findByPk($this->settings['calendar']);
         if ($result->thumb) {
@@ -1341,10 +1228,6 @@ class c2aFrontend extends \Module
         }
     } // getEventThumb
 
-    /**
-     * Event Controller / Event Detail
-     * @return mixed array (vorgegebene Struktur)
-     */
     protected function eventController() {
 
         $getId = \Input::get($this->request['id']);
@@ -1398,7 +1281,7 @@ class c2aFrontend extends \Module
                     'extra'             => $event['extra'],
                     'lat'               => $event['lat'],
                     'lng'               => $event['lng'],
-                    'short_text'        => htmlspecialchars_decode($event['short_text']),
+                    'short_text'        => ''
                 );
 
                 $returnarray = array_merge($returnarray, $tmpArr);
@@ -1415,10 +1298,6 @@ class c2aFrontend extends \Module
         return array('event' => $returnarray);
     } // eventController
 
-    /**
-     * Event Details
-     * @return mixed array (vorgegebene Struktur)
-     */
     protected function getEvent($id = false) {
         $tmpArr = array();
         $i      = 0;
@@ -1445,10 +1324,6 @@ class c2aFrontend extends \Module
         return $tmpArr;
     } // getEvent
 
-    /**
-     * Event Array mit Details befüllen
-     * @return mixed array (vorgegebene Struktur)
-     */
     protected function fillEventArray($result, $pos) {
 
         $weekdays = array(
@@ -1526,10 +1401,6 @@ class c2aFrontend extends \Module
         return $tmpArr;
     } // fillEventArray
 
-    /**
-     * Events ausmisten die nicht im Zeitraum liegen (gem. Contao Funktion)
-     * @return mixed array (start, ende, empty)
-     */
     protected function getDatesFromFormat($strFormat) {
         switch ($strFormat) {
             case 'next_7':
@@ -1594,10 +1465,6 @@ class c2aFrontend extends \Module
         }
     } // getDatesFromFormat
 
-    /**
-     * Articles Conroller / Eigenschaften der Articles
-     * @return mixed array (vorgegebene Struktur)
-     */
     protected function articlesController($id = 0, $lim = 0) {
         $getId       = \Input::get($this->request['id']);
         $postId      = \Input::get($this->request['post_id']);
@@ -1608,12 +1475,6 @@ class c2aFrontend extends \Module
 
         $returnarray['error'] = $this->errorcode(0);
 
-        /*if ($getOption == 1 && isset($getSorttype)) {
-            $returnarray['timestamp'] = 0;
-            $returnarray['error'] = $this->errorcode(16);
-            return array('articles' => $returnarray);
-
-        } else */
         if ($getId || $id) {
             $returnarray['changes'] = 0;
 
@@ -1681,10 +1542,6 @@ class c2aFrontend extends \Module
         return array('articles' => $returnarray);
     } // articlesController
 
-    /**
-     * Ids zu den Content Elementen
-     * @return mixed array (vorgegebene Struktur)
-     */
     protected function getContentIds($id) {
         $tmpArray = array();
         $img = "";
@@ -1729,15 +1586,10 @@ class c2aFrontend extends \Module
         return $tmpArray;
     } // getContentIds
 
-    /**
-     * News-Elemente zusammensetzen
-     * @return mixed array (vorgegebene Struktur)
-     */
     protected function getNewsItems() {
         $tmpArr = array();
         $news = \NewsModel::findPublishedByPids(array($this->settings['news']));
 
-        // news items zusammensetzen
         while ($news->next()) {
             $tmpArr[] = array(
                 'title'  => $news->headline,
@@ -1750,10 +1602,6 @@ class c2aFrontend extends \Module
         return $tmpArr;
     } // getNewsItems
 
-    /**
-     * HTML-Seite aus Content bauen (übernommen von nebelhorn, lediglich anpassung an contao methoden)
-     * @return DOM object HTML Seite
-     */
     protected function getAppContent($html) {
         $libxml_previous_state = libxml_use_internal_errors(true);
 
@@ -1840,46 +1688,38 @@ class c2aFrontend extends \Module
         return $html;
     } // getAppContent
 
-    /**
-     * Laden / Speichern Kommentare
-     * @return mixed array (vorgegebene Struktur)
-     */
     protected function commentsController() {
         $returnarray['error']   = $this->errorcode(0);
         $returnarray['changes'] = 1;
 
         $getTs             = \Input::get($this->request['ts']);
-        $getId             = \Input::get($this->request['id']); // ID der News
+        $getId             = \Input::get($this->request['id']);
         $returnarray['ts'] = (isset($getTs)) ? $getTs : 0;
 
-        // ist news id gesetzt?
         if (isset($getId)) {
-            // soll ein kommentar hinzugefuegt werden?
-            if (\Input::get($this->request['action']) == 'add' ) {
-                // ist der REQUEST_TOKEN der richtige? ist der kommentar , der name, die email auch nicht leer?
-                if( $_REQUEST[$this->request['key']] != REQUEST_TOKEN
-                        || (!$_REQUEST[$this->request['comment']]
-                        || trim($_REQUEST[$this->request['comment']]) == '')
-                        || !$_REQUEST[$this->request['name']]
-                        || !$_REQUEST[$this->request['email']]) {
 
+           if (\Input::get($this->request['action']) == 'add' ) {
+
+                $comment = $_REQUEST[$this->request['comment']];
+                $name    = $_REQUEST[$this->request['name']];
+                $email   = $_REQUEST[$this->request['email']];
+                $key     = $_REQUEST[$this->request['key']];
+
+                if( (!$comment || $comment == "") || !$name || !$email ) {
                    $returnarray['error'] = $this->errorcode(30);
-
-                   // ist es eine gültige email adresse?
-                } elseif (!\Validator::isEmail($_REQUEST[$this->request['email']]) ) {
+                }  elseif (!\Validator::isEmail($email) ) {
                     $returnarray['error'] = $this->errorcode(31);
-                    // dann ab dafür
                 } else {
                     $ts        = time();
 
                     $arrInsert = array(
                         'tstamp'    => $ts,
                         'source'    => 'tl_news',
-                        'parent'    => \Input::get($this->request['id']),
+                        'parent'    => $getId,
                         'date'      => $ts,
-                        'name'      => $_REQUEST[$this->request['name']],
-                        'email'     => $_REQUEST[$this->request['email']],
-                        'comment'   => trim($_REQUEST[$this->request['comment']]),
+                        'name'      => $name,
+                        'email'     => $email,
+                        'comment'   => trim($comment),
                         'published' => ($this->settings['news_moderate'] == 1) ? 0 : 1,
                         'ip'        => \Environment::get('remote_addr'),
                     );
@@ -1887,7 +1727,6 @@ class c2aFrontend extends \Module
                     $objComment = new \CommentsModel();
                     $objComment->setRow($arrInsert)->save();
 
-                    // wurde der kommentar erfolgreich gespeichert? dann schick eine email an den webseiten administrator
                     if ($objComment->id) {
 
                         $strComment = $_REQUEST[$this->request['comment']];
@@ -1914,21 +1753,21 @@ class c2aFrontend extends \Module
                         $returnarray['ts']         = $ts;
                         $returnarray['comment_id'] = $objComment->id;
                         $returnarray['changes']    = 1;
-                        $returnarray['status']     = ($this->settings['news_moderate'] == 1) ? 'Comment is in review' : "Comment published";
+                        $returnarray['status']     = ($this->settings['news_moderate'] == 1) ? 'Kommentar wird geprüft.' : "Kommentar veröffentlicht.";
+
                     } else {
                         $returnarray['error'] = $this->errorcode(31);
                     }
                 }
 
-            } else { // Kommentare anzeigen
+            } else {
                 $post = $this->getComment($getId);
 
-                if ( $post['commentStatus'] == 'open') { // sollen kommentare überhaupt angezeigt werden?
+                if ( $post['commentStatus'] == 'open') {
                     $returnarray['comment_status'] = $post['commentStatus'];
                     $returnarray['comments_count'] = $post['commentsCount'];
                     $returnarray['REQUEST_TOKEN']  = REQUEST_TOKEN;
 
-                    // sind kommentare vorhanden?
                     if ($post['commentsCount'] > 0) {
                         $pos = 0;
 
@@ -1950,7 +1789,6 @@ class c2aFrontend extends \Module
                             $tempArray['author']['email'] = $comment->email;
                             $tempArray['author']['img']   = "";
 
-                            // gibt es eine antwort?
                             if ($comment->addReply) {
                                 $objUser = \UserModel::findByPk($comment->author);
 
@@ -1987,10 +1825,6 @@ class c2aFrontend extends \Module
         return (array('comments' => $returnarray));
     } // commentsController
 
-    /**
-     * Kommentardetails
-     * @return array Kommentar
-     */
     protected function getComment($id) {
         $tmpArr = array();
         $news   = \NewsModel::findByPk($id);
@@ -2002,7 +1836,6 @@ class c2aFrontend extends \Module
             $tmpArr['commentStatus'] = "open";
             $tmpArr['commentsCount'] = count($result);
 
-            // wenn kommentare vorhanden, als item zwischenspeichern
             if (count($result) > 0) {
                 while ($result->next()) {
                     $tmpArr['items'] = $result;
@@ -2013,10 +1846,6 @@ class c2aFrontend extends \Module
         return $tmpArr;
     } // getComment
 
-    /**
-     * Nebelhorn Informationen
-     * @return mixed array (vorgegebene Struktur)
-     */
     protected function ynaSettingsController() {
         return array('yna_settings' => array(
             'error' => $this->errorcode(10),
@@ -2026,10 +1855,6 @@ class c2aFrontend extends \Module
         )));
     } // ynaSettingsController
 
-    /**
-     * Nebelhorn Errorcode
-     * @return mixed array (vorgegebene Struktur)
-     */
     protected function errorcode($er = 10) {
         $errorarray['url'] = \Environment::get('base') . \Environment::get('request');
 
@@ -2150,10 +1975,6 @@ class c2aFrontend extends \Module
         return ($errorarray);
     } // errorcode
 
-    /**
-     * Geoinformation Abfrage Google API
-     * @return array lattitude & longitude
-     */
     protected function getGeoInfo($street, $postal, $city) {
 
         if (!$street && !$postal && !$city) {
@@ -2181,10 +2002,6 @@ class c2aFrontend extends \Module
         return $retArr;
     } // getGeoInfo
 
-    /**
-     * Helfermethode um Bildpfad zu bekommen
-     * @return string the path
-     */
     protected function getFilePath($file) {
         $uuid    = \String::binToUuid($file);
         $objFile = \FilesModel::findByUuid($uuid);

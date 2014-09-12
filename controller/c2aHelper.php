@@ -9,9 +9,6 @@
 
 namespace Kontor4;
 
-/**
- * Behilfsklasse für dca
- */
 class c2aHelper extends \Backend
 {
 

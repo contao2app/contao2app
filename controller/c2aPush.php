@@ -9,9 +9,6 @@
 
 namespace Kontor4;
 
-/**
- * Klasse zum Aufruf der Urbanairship API
- */
 class c2aPush extends \BackendModule
 {
 
@@ -262,14 +259,16 @@ class c2aPush extends \BackendModule
             $content  = curl_exec($session);
             $response = curl_getinfo($session);
 
-            $dumpContent = print_r(json_decode($content, true), true);
-            $dumpResponse = print_r($response, true);
+            // $dumpContent = print_r(json_decode($content, true), true);
+            // $dumpResponse = print_r($response, true);
 
             if ($response['http_code'] != '202') {
-                $this->Template->status .=  '<p class="tl_error">Server-Antwort:<pre>Content:' . "\n" . $dumpContent . "\n" . 'Response:' . "\n" . $dumpResponse . '</pre></p>';
+                $this->Template->status .=  '<p class="tl_error">Server-Fehler</p>';
+                // $this->Template->status .=  '<p class="tl_error">Server-Antwort:<pre>Content:' . "\n" . $dumpContent . "\n" . 'Response:' . "\n" . $dumpResponse . '</pre></p>';
                 $status = TL_ERROR;
             } else {
-                $this->Template->status .= '<p class="tl_confirm">Server-Antwort:<pre>Content:' . "\n" . $dumpContent . "\n" . 'Response:' . "\n" . $dumpResponse . '</pre></p>';
+                $this->Template->status .= '<p class="tl_confirm">Push gesendet</p>';
+                // $this->Template->status .= '<p class="tl_confirm">Server-Antwort:<pre>Content:' . "\n" . $dumpContent . "\n" . 'Response:' . "\n" . $dumpResponse . '</pre></p>';
                 $status = TL_GENERAL;
             }
 

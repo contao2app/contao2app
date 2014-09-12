@@ -23,10 +23,6 @@ class c2aHowTo extends \BackendModule
         $this->Template->qr = $this->getTheQRCode();
     }
 
-    /**
-     * Aufruf der Google API zum Generieren eines QR-Codes mit base_url ohne / am Ende
-     * @return string QR-Code
-     */
     protected function getTheQRCode() {
 
         return 'https://chart.googleapis.com/chart?chs=300x300&cht=qr&chl=blappsta://?url=' . substr(\Environment::get('base'), 0, -1) . '&choe=UTF-8" alt="blappsta://?url=' . substr(\Environment::get('base'), 0, -1);
