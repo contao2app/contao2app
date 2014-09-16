@@ -9,12 +9,21 @@ Um die Contao2app-Erweiterung  im Zusammenspiel mit dem Blappsta-Plugin nutzen z
 <ol>
 	<li>1. Legen Sie unter „Contao2app-Settings“ zunächst Ihre App-Konfiguration an.</li>
 	<li>2. Legen Sie ein neues Frontend-Modul vom Typ "c2a" an (zu finden unter "Anwendungen"). Dieses ModuI liefert die anzuzeigenden Inhalte als sog. json-String an die App. Ohne dieses Modul werden keine Inhalte in der App angezeigt. </li>
-	<li>3. Laden Sie die Blappsta-App auf Ihr Smartphone</li>
-	<li>4. Sie können Ihre eigene App testweise auf Ihrem Smartphone ausprobieren, indem Sie den angezeigten QR-Code mit Ihrem Smartphone scannen. Der dahinterliegende Code überschreibt die Inhalte der Blappsta-App mit Ihrer eigenen App.<br /><br />Alternativ können Sie Ihre App auch im Emulator testen. Geben Sie dazu einfach die URL Ihrer Contao-Installation ein. Aber glauben Sie uns: Es fühlt sich wirklich besser an, wenn Sie Ihre App gleich „in der Hand haben“.</li>
+	<li>3. Laden Sie die Blappsta Preview App auf Ihr Smartphone (siehe unten)</li>
+	</ol>
+
+<p>Die komplette Dokumentation finden Sie unter <a href="http://www.contao2app.de/index.php/erlaeuterung-des-backends.html" target="_blank" style="text-decoration:underline">www.contao2app.de</a></p>
+<p>Um eine Vorschau zu erhalten, gehe Sie wie folgt vor:
+<ol>
+<li>1. Installieren Sie die Blappsta Preview App für iOS aus dem <a href="https://itunes.apple.com/de/app/blappsta-preview/id912390326?mt=8" target="_blank" style="text-decoration:underline">Apple App Store</a> oder für Android aus dem <a href="https://play.google.com/store/apps/details?id=com.nebelhorn.blappstaappcheck" target="_blank" style="text-decoration:underline">Google Play Store</a>.</li>
+<li>2. Starten Sie die Blappsta Preview App und geben Sie die URL Ihrer Contao2app-Installation ein. </li>
+<li>3. Zum Testen können Sie zum Beispiel&nbsp;<a href="http://demo.contao2app.de" target="_blank" style="text-decoration:underline">http://demo.contao2app.de</a> verwenden. Das ist die offizielle Contao-Demo - nur eben als App.</li>
 </ol>
-Die komplette Dokumentation finden Sie unter <a href="http://www.contao2app.de/index.php/erlaeuterung-des-backends.html" target="_blank" style="text-decoration:underline">www.contao2app.de</a>
-Wenn Sie das Blappsta-Plugin bereits auf Ihrem Smartphone installiert haben, scannen Sie diesen QR-Code und öffnen den angezeigten Link in Ihrem Browser auf dem Smartphone. <br />Und was passiert dann?<br />Mit dem Link werden die Blappsta-Inhalte überschrieben - und zwar mit den Inhalten aus Ihrer App. Cool, oder?
-    <img src="<?php echo $this->qr; ?>" alt="QR-Code">
+<p>3. Fühlt sich doch gut an, wenn Sie Ihre App gleich „in der Hand haben“, oder?</p>
+
+    <!--<img src="<?php //echo $this->qr; ?>" alt="QR-Code">-->
 
 
 </div>
+
+

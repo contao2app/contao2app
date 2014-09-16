@@ -3,9 +3,22 @@
     <a href="<?php echo $this->href; ?>" class="header_back" title="<?php echo $this->title; ?>"><?php echo $this->button; ?></a>
 </div>
 
-<h2 class="sub_headline">Testen Sie hier Ihre App: </h2>
+<h2 class="sub_headline">Testen Sie Ihre contao2app-Installation auf Ihrem Smartphone </h2>
 
-<div id="simulator" style="margin: 20px 0 20px 220px;">
+<div id="tl_soverview">
 
-    <iframe src="https://app.io/p6Kgfi?params=%7B%22customURLString%22%3A%22<?php echo $this->url; ?>%22%7D&#038;autoplay=true&#038;orientation=portrait&#038;device=iphone5" height="607px" width="291px" frameborder="0" allowtransparency="true" scrolling="no"></iframe>
-</div>
+Um die Contao2app-Erweiterung  im Zusammenspiel mit dem Blappsta-Plugin nutzen zu können, ist folgendes notwendig:
+<ol>
+	<li>1. Legen Sie unter „Contao2app-Settings“ zunächst Ihre App-Konfiguration an.</li>
+	<li>2. Legen Sie ein neues Frontend-Modul vom Typ "c2a" an (zu finden unter "Anwendungen"). Dieses ModuI liefert die anzuzeigenden Inhalte als sog. json-String an die App. Ohne dieses Modul werden keine Inhalte in der App angezeigt. </li>
+	<li>3. Laden Sie die Blappsta Preview App auf Ihr Smartphone (siehe unten)</li>
+	</ol>
+
+<p>Die komplette Dokumentation finden Sie unter <a href="http://www.contao2app.de/index.php/erlaeuterung-des-backends.html" target="_blank" style="text-decoration:underline">www.contao2app.de</a></p>
+<p>Um eine Vorschau zu erhalten, gehe Sie wie folgt vor:
+<ol>
+<li>1. Installieren Sie die Blappsta Preview App für iOS aus dem <a href="https://itunes.apple.com/de/app/blappsta-preview/id912390326?mt=8" target="_blank" style="text-decoration:underline">Apple App Store</a> oder für Android aus dem <a href="https://play.google.com/store/apps/details?id=com.nebelhorn.blappstaappcheck" target="_blank" style="text-decoration:underline">Google Play Store</a>.</li>
+<li>2. Starten Sie die Blappsta Preview App und geben Sie die URL Ihrer Contao2app-Installation ein. </li>
+<li>3. Zum Testen können Sie zum Beispiel&nbsp;<a href="http://demo.contao2app.de" target="_blank" style="text-decoration:underline">http://demo.contao2app.de</a> verwenden. Das ist die offizielle Contao-Demo - nur eben als App.</li>
+</ol>
+<p>3. Fühlt sich doch gut an, wenn Sie Ihre App gleich „in der Hand haben“, oder?</p></div>
