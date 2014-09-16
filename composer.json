@@ -35,6 +35,9 @@
 	"autoload":{
 		"classmap":[""]
 	},
+    "replace":{
+        "contao-legacy/contao2app":"*"
+    },
 	"extra":{
 		"contao":{
 			"sources":{
@@ -43,3 +46,5 @@
 		}
 	}
 }
+
+
