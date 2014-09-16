@@ -1,5 +1,5 @@
 {
-	"name":"Contao2app/contao2app",
+	"name":"contao2app/contao2app",
 	"description":"Contao2App provides methods to use contao as the data source for blappsta mobile apps. (http://www.blappsta.com)",
 	"keywords":["contao","blappsta","mobile","app","ios","android"],
 	"type":"contao-module",
