@@ -1,0 +1,45 @@
+{
+	"name":"Contao2app/contao2app",
+	"description":"Contao2App provides methods to use contao as the data source for blappsta mobile apps. (http://www.blappsta.com)",
+	"keywords":["contao","blappsta","mobile","app","ios","android"],
+	"type":"contao-module",
+	"homepage":"http://www.contao2app.de",
+	"license":"LGPL-3.0+",
+	"authors":[
+		{
+			"name":"Kontor4",
+			"homepage":"http://www.kontor4.de/",
+			"role":"Developer"
+		},
+        {
+			"name":"Björn Strobach",
+			"homepage":"http://www.kontor4.de/",
+			"role":"Developer"
+		},
+        {
+			"name":"Felix Pfeiffer",
+			"homepage":"http://www.felixpfeiffer.com/",
+			"role":"Developer"
+		}
+	],
+	"support":{
+		"issues":"https://github.com/Contao2app/contao2app/issues",
+		"source":"https://github.com/Contao2app/contao2app/"
+	},
+	"require":{
+		"php":">=5.3",
+		"contao/core":">=3.2,<4",
+		"contao-community-alliance/composer-installer":"*",
+		"menatwork/contao-multicolumnwizard":"3.2.*"
+	},
+	"autoload":{
+		"classmap":[""]
+	},
+	"extra":{
+		"contao":{
+			"sources":{
+				"":"system/modules/y-contao2app"
+			}
+		}
+	}
+}
