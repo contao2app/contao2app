@@ -151,7 +151,7 @@ $GLOBALS['TL_DCA']['tl_c2a_settings'] = array (
         'cssStyle' => array (
             'label'     => &$GLOBALS['TL_LANG']['tl_c2a_settings']['cssStyle'],
             'inputType' => 'textarea',
-            'eval'      => array('allowHtml' => true, 'class' => 'monospace'),
+            'eval'      => array('allowHtml' => true, 'tl_class' => 'clr'),
             'sql'       => "text NULL"
         ),
 
@@ -191,7 +191,7 @@ $GLOBALS['TL_DCA']['tl_c2a_settings'] = array (
         'eventManager' => array (
             'label'     => &$GLOBALS['TL_LANG']['tl_c2a_settings']['eventManager'],
             'inputType' => 'checkbox',
-            'eval'      => array('tl_class' => 'long m12', 'submitOnChange' => true),
+            'eval'      => array('tl_class' => 'clr long', 'submitOnChange' => true),
             'sql'       => "varchar(255) NOT NULL default ''"
         ),
 
@@ -217,7 +217,7 @@ $GLOBALS['TL_DCA']['tl_c2a_settings'] = array (
         'newsManager' => array (
             'label'     => &$GLOBALS['TL_LANG']['tl_c2a_settings']['newsManager'],
             'inputType' => 'checkbox',
-            'eval'      => array('tl_class' => 'long m12', 'submitOnChange' => true),
+            'eval'      => array('tl_class' => 'clr long', 'submitOnChange' => true),
             'sql'       => "varchar(255) NOT NULL default ''"
         ),
 
