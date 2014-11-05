@@ -112,40 +112,40 @@ class c2aFrontend extends \Module
                 $this->log(\Environment::get('request'), "Contao2App::log()", "CONTAO2APP");
 
                 switch ($controller) {
-                    case 'settings':
+                    case 'nh_settings':
                         echo json_encode($this->settingsController());
                         break;
-                    case 'homepresets':
+                    case 'nh_homepresets':
                         echo json_encode( $this->homepresetsController());
                         break;
-                    case 'teaser':
+                    case 'nh_teaser':
                         echo json_encode($this->teaserController());
                         break;
-                    case 'categories':
+                    case 'nh_categories':
                         echo json_encode($this->categoriesController());
                         break;
-                    case 'articles':
+                    case 'nh_articles':
                         echo json_encode($this->articlesController());
                         break;
-                    case 'article':
+                    case 'nh_article':
                         echo json_encode($this->articleController());
                         break;
-                    case 'events':
+                    case 'nh_events':
                         echo json_encode($this->eventsController());
                         break;
-                    case 'event':
+                    case 'nh_event':
                         echo json_encode($this->eventController());
                         break;
-                    case 'yna_settings':
+                    case 'nh_settings':
                         echo json_encode($this->ynaSettingsController());
                         break;
-                    case 'comments':
+                    case 'nh_comments':
                         echo json_encode($this->commentsController());
                         break;
                     case 'ibeacon':
                         echo json_encode($this->iBeaconController());
                         break;
-                    case 'content':
+                    case 'nh_content':
                         header('Content-Type: text/html');
                         echo $this->contentController();
                         break;
